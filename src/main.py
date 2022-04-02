@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 
 sys.path.append(os.getcwd())
 
-from numAnalysis.PINN import *
+from src.numAnalysis.PINN import *
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -54,9 +54,9 @@ from mpl_toolkits.mplot3d import Axes3D
 ### Punto 0
 ############################################################################
 
-f = open("output/logs.txt","w+")
+f = open("../output/logs.txt","w+")
 f.close()
-f = open("output/logs.txt", "a") # salveremo tutto l'output in un file .txt
+f = open("../output/logs.txt", "a") # salveremo tutto l'output in un file .txt
 
 # Generiamo aleatoriamente punti x,y in R per ottenere i dataset
 # per l'interpolazione e l'equazione.
@@ -71,7 +71,7 @@ f = open("output/logs.txt", "a") # salveremo tutto l'output in un file .txt
 # Avra' diritto a un premio. Potete modificare anche gli optimizer/funzioni
 # di attivazione della NN se siete coraggiosi!
 
-with open("input/NN_params.json", "r") as read_file:
+with open("../input/NN_params.json", "r") as read_file:
     NN_params = json.load(read_file)
 print("Input file parameters: ", NN_params, "\n\n", file=f)
 
@@ -99,7 +99,7 @@ model_NN = NN(u_ex,**NN_params[0])
 
 # Printate la rete neurale costruita, cosi' da vedere tutti i parametri scelti
 print("Model\n", model_NN,  "\n\n", file=f)
-
+'''
 # Grazie al metodo fit, allenate la rete neurale cosi' che interpoli i valori
 # della soluzione esatta
 model_NN.fit(train_points, f, num_epochs=NN_params[1]["num_epochs"])
@@ -158,3 +158,4 @@ model_PINN_inverse.fit(train_points, pde_points, f, num_epochs=NN_params[1]["num
 # Mostrate il risultato il mu
 print('estimated mu:   %f' % model_PINN_inverse.mu.numpy(), file=f)
 print('relative error: %1.2e' % (abs(model_PINN_inverse.mu.numpy() - mu_exact)/mu_exact), file=f)
+'''

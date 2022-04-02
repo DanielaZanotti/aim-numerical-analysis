@@ -3,6 +3,7 @@ import tensorflow as tf
 import time
 import matplotlib.pyplot as plt
 
+
 ''' Istruzioni: devi inserire il tuo codice all'interno degli apici'''
 
 class grid:
@@ -32,6 +33,17 @@ class NN:
         Keep this:
         '''
 
+        self.n_layers = n_layers
+        self.n_neurons = n_neurons
+        self.activation_function = activation
+        self.dim = dim
+
+        self.hidden_layers = [tf.keras.layers.Dense(n_neurons, activation = activation) for _ in range(n_layers)]
+        self.layers = [tf.keras.Input(shape=(dim,))]
+        self.layers.extend(self.hidden_layers)
+        self.layers.append(tf.keras.layers.Dense(1, activation = activation))
+
+
         self.model = tf.keras.Sequential(self.layers)
         self.last_loss_fit = tf.constant([0.0])
         self.learning_rate = learning_rate
@@ -46,6 +58,9 @@ class NN:
         ''' Make a method to print the number of layers,
             neaurons, activation function, optimizer
             and learning rate of the NN'''
+        rep = 'NN(' + str(self.n_layers) + ',' + str(self.n_neurons) + ',' + str(self.activation_function) + ','  \
+                    + str(self.optimizer) + ',' + str(self.learning_rate) + ')'
+        return rep
 
     def loss_fit(self,points):
         '''
@@ -66,6 +81,9 @@ class NN:
 
         self.last_loss_fit = ??
         '''
+
+        self.last_loss_fit = tf.reduce_mean([tf.square( self(points.xy) - self.u_ex(points.x,points.y)) ])
+
         return self.last_loss_fit
 
     def fit(self, points, log, num_epochs=100):
@@ -73,6 +91,16 @@ class NN:
         Create una routine che minimizzi la loss fit
         e mostri il tempo impiegato
         '''
+
+        tempo = time.time()
+
+        self.model.compile(optimizer = self.optimizer, loss = self.last_loss_fit)
+
+        for i in range(num_epochs):
+            self.model.train_step(points.xy)
+
+        print("Time\n", tempo, "\n\n", file=log)
+
         return
 
 class PINN(NN):
