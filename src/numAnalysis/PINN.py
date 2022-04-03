@@ -122,14 +122,14 @@ class PINN(NN):
         self.last_loss_PDE = tf.constant([0.0]);
         self.trainable_variables = [self.model.variables]
         if inverse:
-          '''
-          Aggiungi self.mu alle trainable variables
-          (oltre alle model.variables) quando
-          vogliamo risolvere il problema inverso
+            self.trainable_variables.append(self.mu)
+            '''
+            Aggiungi self.mu alle trainable variables
+            (oltre alle model.variables) quando
+             vogliamo risolvere il problema inverso
 
-          self.trainable_variables = ?
-          '''
-          self.trainable_variables.append(self.mu)
+             self.trainable_variables = ?
+            '''
 
 
     def loss_PDE(self, points):
@@ -168,4 +168,16 @@ class PINN(NN):
         '''
         Allena la rete usando sia la loss_fit che la loss_PDE
         '''
+
+        start = time.time()
+
+        for iteration in range(num_epochs):
+            self.optimizer.minimize(lambda: self.loss_fit(points_int) + self.loss_PDE(points_pde), self.trainable_variables)
+            print("Epoch %d, Loss fit %f, Loss PDE %f, mu %f" % (iteration, self.last_loss_fit, self.last_loss_PDE, self.mu.numpy()))
+
+        print("PINN: ", "\n", file=log)
+        print("Fit loss: %f " % (self.last_loss_fit,), "\n", file=log)
+        print("PDE loss: %f " % (self.last_loss_PDE,), "\n", file=log)
+        print("Estimated mu: %f " % (self.mu.numpy(),), "\n", file=log)
+        print("Time occured: %f " % (time.time() - start,), "\n", file=log)
 

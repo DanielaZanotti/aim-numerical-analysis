@@ -110,9 +110,9 @@ fig = plt.figure()
 ax  = fig.add_subplot(111, projection='3d')
 ax.scatter(test_points.x, test_points.y, u_test)
 ax.scatter(test_points.x, test_points.y, model_NN(test_points.xy).numpy())
-ax.legend(('learned solution','exact solution'))
+ax.legend(('exact solution','learned solution'))
 fig.savefig('../output/interpolationProblem.png', bbox_inches='tight')
-'''
+
 ############################################################################
 ### Punto 2
 ############################################################################
@@ -129,8 +129,8 @@ fig = plt.figure()
 ax  = fig.add_subplot(111, projection='3d')
 ax.scatter(test_points.x, test_points.y, u_test)
 ax.scatter(test_points.x, test_points.y, model_PINN(test_points.xy).numpy())
-ax.legend(('learned solution','exact solution'))
-fig.savefig('output/pinnProblem.png', bbox_inches='tight')
+ax.legend(('exact solution','learned solution'))
+fig.savefig('../output/pinnProblem.png', bbox_inches='tight')
 
 ###########################################################################
 ### Punto 3
@@ -158,4 +158,3 @@ model_PINN_inverse.fit(train_points, pde_points, f, num_epochs=NN_params[1]["num
 # Mostrate il risultato il mu
 print('estimated mu:   %f' % model_PINN_inverse.mu.numpy(), file=f)
 print('relative error: %1.2e' % (abs(model_PINN_inverse.mu.numpy() - mu_exact)/mu_exact), file=f)
-'''
