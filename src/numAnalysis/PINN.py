@@ -16,10 +16,10 @@ class grid:
 class NN:
     def __init__(self, u_ex, n_layers = 3,
                        n_neurons = 4,
-                       activation = tf.nn.tanh,
+                       activation = tf.nn.selu,
                        dim = 2,
                        learning_rate = 1e-3,
-                       opt = tf.keras.optimizers.Adam):
+                       opt = tf.keras.optimizers.Nadam):
 
         '''
         Your code goes here
@@ -107,10 +107,10 @@ class PINN(NN):
 
     def __init__(self, u_ex, n_layers = 3,
                        n_neurons = 4,
-                       activation = tf.nn.tanh,
+                       activation = tf.nn.selu,
                        dim = 2,
                        learning_rate = 1e-3,
-                       opt = tf.keras.optimizers.Adam,
+                       opt = tf.keras.optimizers.Nadam,
                        mu = tf.Variable(1.0),
                        inverse = False):
 

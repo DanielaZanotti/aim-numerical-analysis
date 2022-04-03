@@ -1,0 +1,35 @@
+Input file parameters:  [{'n_layers': 4, 'n_neurons': 4, 'dim': 2, 'learning_rate': 0.01}, {'num_train_points': 350, 'num_pde_points': 650, 'num_test_points': 10000, 'seed': 1, 'num_epochs': 1500}] 
+
+
+Model
+ NN(4,4,<function selu at 0x000001C95791A3A0>,<keras.optimizer_v2.nadam.Nadam object at 0x000001C95DD512B0>,0.01) 
+
+
+NN:  
+
+Training loss: 0.593557  
+
+Time occured: 28.696688  
+
+PINN:  
+
+Fit loss: 0.603577  
+
+PDE loss: 0.022336  
+
+Estimated mu: 1.000000  
+
+Time occured: 44.511818  
+
+PINN:  
+
+Fit loss: 0.619447  
+
+PDE loss: 0.070262  
+
+Estimated mu: 1.236162  
+
+Time occured: 45.610042  
+
+estimated mu:   1.236162
+relative error: 2.36e-01

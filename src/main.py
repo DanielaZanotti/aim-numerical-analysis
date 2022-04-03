@@ -71,7 +71,7 @@ f = open("../output/logs.txt", "a") # salveremo tutto l'output in un file .txt
 # Avra' diritto a un premio. Potete modificare anche gli optimizer/funzioni
 # di attivazione della NN se siete coraggiosi!
 
-with open("../input/NN_params.json", "r") as read_file:
+with open("../input/my_NN_params.json", "r") as read_file:
     NN_params = json.load(read_file)
 print("Input file parameters: ", NN_params, "\n\n", file=f)
 
