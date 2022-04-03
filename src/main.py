@@ -99,7 +99,7 @@ model_NN = NN(u_ex,**NN_params[0])
 
 # Printate la rete neurale costruita, cosi' da vedere tutti i parametri scelti
 print("Model\n", model_NN,  "\n\n", file=f)
-'''
+
 # Grazie al metodo fit, allenate la rete neurale cosi' che interpoli i valori
 # della soluzione esatta
 model_NN.fit(train_points, f, num_epochs=NN_params[1]["num_epochs"])
@@ -111,8 +111,8 @@ ax  = fig.add_subplot(111, projection='3d')
 ax.scatter(test_points.x, test_points.y, u_test)
 ax.scatter(test_points.x, test_points.y, model_NN(test_points.xy).numpy())
 ax.legend(('learned solution','exact solution'))
-fig.savefig('output/interpolationProblem.png', bbox_inches='tight')
-
+fig.savefig('../output/interpolationProblem.png', bbox_inches='tight')
+'''
 ############################################################################
 ### Punto 2
 ############################################################################

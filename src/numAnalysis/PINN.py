@@ -3,7 +3,6 @@ import tensorflow as tf
 import time
 import matplotlib.pyplot as plt
 
-
 ''' Istruzioni: devi inserire il tuo codice all'interno degli apici'''
 
 class grid:
@@ -82,7 +81,7 @@ class NN:
         self.last_loss_fit = ??
         '''
 
-        self.last_loss_fit = tf.reduce_mean([tf.square( self(points.xy) - self.u_ex(points.x,points.y)) ])
+        self.last_loss_fit  = tf.reduce_mean([tf.square( self(points.xy) - self.u_ex(points.x,points.y)) ])
 
         return self.last_loss_fit
 
@@ -92,14 +91,15 @@ class NN:
         e mostri il tempo impiegato
         '''
 
-        tempo = time.time()
+        start = time.time()
 
-        self.model.compile(optimizer = self.optimizer, loss = self.last_loss_fit)
+        for iteration in range(num_epochs):
+            self.optimizer.minimize(lambda: self.loss_fit(points), self.model.variables)
+            print("Epoch %d, Loss %f" % (iteration, self.last_loss_fit, ))
 
-        for i in range(num_epochs):
-            self.model.train_step(points.xy)
-
-        print("Time\n", tempo, "\n\n", file=log)
+        print("NN: ", "\n", file=log)
+        print("Training loss: %f " % (self.last_loss_fit,), "\n", file=log)
+        print("Time occured: %f " % (time.time() - start,), "\n", file=log)
 
         return
 
@@ -117,6 +117,7 @@ class PINN(NN):
         '''
         Build father class
         '''
+        super().__init__(u_ex, n_layers, n_neurons, activation, dim, learning_rate, opt)
         self.mu = mu
         self.last_loss_PDE = tf.constant([0.0]);
         self.trainable_variables = [self.model.variables]
@@ -128,6 +129,7 @@ class PINN(NN):
 
           self.trainable_variables = ?
           '''
+          self.trainable_variables.append(self.mu)
 
 
     def loss_PDE(self, points):
@@ -149,8 +151,21 @@ class PINN(NN):
         self.last_loss_PDE = tf.reduce_mean(tf.square(-self.mu*(u_xx+u_yy)-tf.reshape(u,(x.shape[0],))))
         return self.last_loss_PDE
         '''
+        x = tf.constant(points.x)
+        y = tf.constant(points.y)
+        with tf.GradientTape(persistent = True) as tape:
+            tape.watch(x)
+            tape.watch(y)
+            u = self.model(tf.stack((x,y),axis=1))
+            u_x = tape.gradient(u, x)
+            u_y = tape.gradient(u, y)
+            u_xx = tape.gradient(u_x, x)
+            u_yy = tape.gradient(u_y, y)
+        self.last_loss_PDE = tf.reduce_mean(tf.square(-self.mu*(u_xx+u_yy)-tf.reshape(u,(x.shape[0],))))
+        return self.last_loss_PDE
 
     def fit(self,points_int,points_pde,log,num_epochs=100):
         '''
         Allena la rete usando sia la loss_fit che la loss_PDE
         '''
+
