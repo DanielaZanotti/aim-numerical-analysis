@@ -54,9 +54,9 @@ from mpl_toolkits.mplot3d import Axes3D
 ### Punto 0
 ############################################################################
 
-f = open("../output/logs.txt","w+")
+f = open("output/logs.txt","w+")
 f.close()
-f = open("../output/logs.txt", "a") # salveremo tutto l'output in un file .txt
+f = open("output/logs.txt", "a") # salveremo tutto l'output in un file .txt
 
 # Generiamo aleatoriamente punti x,y in R per ottenere i dataset
 # per l'interpolazione e l'equazione.
@@ -71,7 +71,7 @@ f = open("../output/logs.txt", "a") # salveremo tutto l'output in un file .txt
 # Avra' diritto a un premio. Potete modificare anche gli optimizer/funzioni
 # di attivazione della NN se siete coraggiosi!
 
-with open("../input/my_NN_params.json", "r") as read_file:
+with open("input/my_NN_params.json", "r") as read_file:
     NN_params = json.load(read_file)
 print("Input file parameters: ", NN_params, "\n\n", file=f)
 
@@ -111,7 +111,7 @@ ax  = fig.add_subplot(111, projection='3d')
 ax.scatter(test_points.x, test_points.y, u_test)
 ax.scatter(test_points.x, test_points.y, model_NN(test_points.xy).numpy())
 ax.legend(('exact solution','learned solution'))
-fig.savefig('../output/interpolationProblem.png', bbox_inches='tight')
+fig.savefig('output/interpolationProblem.png', bbox_inches='tight')
 
 ############################################################################
 ### Punto 2
@@ -130,7 +130,7 @@ ax  = fig.add_subplot(111, projection='3d')
 ax.scatter(test_points.x, test_points.y, u_test)
 ax.scatter(test_points.x, test_points.y, model_PINN(test_points.xy).numpy())
 ax.legend(('exact solution','learned solution'))
-fig.savefig('../output/pinnProblem.png', bbox_inches='tight')
+fig.savefig('output/pinnProblem.png', bbox_inches='tight')
 
 ###########################################################################
 ### Punto 3

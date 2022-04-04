@@ -2,14 +2,14 @@ Input file parameters:  [{'n_layers': 4, 'n_neurons': 4, 'dim': 2, 'learning_rat
 
 
 Model
- NN(4,4,<function selu at 0x000001C95791A3A0>,<keras.optimizer_v2.nadam.Nadam object at 0x000001C95DD512B0>,0.01) 
+ NN(4,4,<function selu at 0x000001E8CD98A3A0>,<keras.optimizer_v2.nadam.Nadam object at 0x000001E8D3DC22B0>,0.01) 
 
 
 NN:  
 
 Training loss: 0.593557  
 
-Time occured: 28.696688  
+Time occured: 21.586696  
 
 PINN:  
 
@@ -19,7 +19,7 @@ PDE loss: 0.022336
 
 Estimated mu: 1.000000  
 
-Time occured: 44.511818  
+Time occured: 44.337444  
 
 PINN:  
 
@@ -29,7 +29,7 @@ PDE loss: 0.070262
 
 Estimated mu: 1.236162  
 
-Time occured: 45.610042  
+Time occured: 45.487204  
 
 estimated mu:   1.236162
 relative error: 2.36e-01
